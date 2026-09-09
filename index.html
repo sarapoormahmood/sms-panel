@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>پنل ارسال پیامک</title>
+
+  <!-- Flowbite -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet">
+
+  <!-- Tagify -->
+  <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css">
+
+  <!-- CSS پروژه -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Persian Date Picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/saeedvir/azar-datepicker@latest/datepicker.min.css">
+</head>
+
+<body>
+
+  <main class="sms-page">
+
+    <section class="sms-card">
+
+      <header class="sms-header">
+        <h1 class="sms-title">ارسال پیامک</h1>
+      </header>
+
+      <form id="smsForm" class="sms-form">
+
+        <!-- فرستنده -->
+        <div class="mb-5">
+          <label for="sender" class="block mb-2 text-sm font-medium text-gray-900">
+            فرستنده
+          </label>
+
+          <select id="sender" name="sender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+           focus:ring-blue-500 focus:border-blue-500
+           block w-full p-2.5">
+            <option value="1000999888">
+              1000999888 (پیش‌فرض)
+            </option>
+
+            <option value="1000999777">
+              1000999777
+            </option>
+          </select>
+        </div>
+
+        <!-- گیرنده -->
+        <div class="mb-5">
+          <label for="recipients" class="block mb-2 text-sm font-medium text-gray-900">
+            شماره گیرنده
+          </label>
+
+          <input id="recipients" name="recipients" type="text" placeholder="افزودن شماره..." autocomplete="off">
+
+          <button type="button" id="clearRecipients" class="mt-2 text-xs font-medium text-red-600 hover:text-red-700">
+            پاک کردن همه شماره‌ها
+          </button>
+
+          <p id="recipientError" class="hidden mt-2 text-sm text-red-600">
+            شماره تماس وارد شده اشتباه است
+          </p>
+        </div>
+
+        <!-- متن پیام -->
+        <div class="mb-5">
+
+          <label for="message" class="block mb-2 text-sm font-medium text-gray-900">
+            متن پیام
+          </label>
+
+          <textarea id="message" name="message" rows="5" maxlength="160" placeholder="متن پیامک خود را وارد کنید..."
+            class="block p-2.5 w-full text-sm text-gray-900
+           bg-gray-50 rounded-lg border border-gray-300
+           focus:ring-blue-500 focus:border-blue-500"></textarea>
+
+          <div class="message-counter">
+            <span id="characterCount">0</span>
+            <span>/</span>
+            <span id="characterLimit">160</span>
+          </div>
+
+        </div>
+
+        <!-- زمان‌بندی -->
+        <div class="flex items-center justify-between w-full mt-1 mb-5">
+
+          <label for="scheduleToggle" class="text-sm font-medium text-gray-900">
+            زمان‌بندی ارسال
+          </label>
+
+          <label class="inline-flex items-center cursor-pointer">
+
+            <input id="scheduleToggle" type="checkbox" class="sr-only peer">
+
+            <div class="relative w-11 h-6 bg-gray-200 rounded-full
+             peer-focus:outline-none peer-focus:ring-4
+             peer-focus:ring-blue-300
+             peer-checked:bg-blue-600
+             after:content-['']
+             after:absolute after:top-[2px] after:start-[2px]
+             after:bg-white after:border-gray-300 after:border
+             after:rounded-full after:h-5 after:w-5
+             after:transition-all
+             peer-checked:after:translate-x-full
+             rtl:peer-checked:after:-translate-x-full"></div>
+
+          </label>
+
+        </div>
+
+        <!-- فیلدهای زمان‌بندی -->
+        <div id="scheduleFields" class="schedule-fields hidden">
+
+          <!-- ساعت ارسال -->
+          <div class="form-group">
+            <label for="scheduleTime" class="block mb-2 text-sm font-medium text-gray-900">
+              ساعت ارسال
+            </label>
+
+            <input id="scheduleTime" type="time" class="form-input">
+          </div>
+
+          <!-- تاریخ ارسال -->
+          <div class="form-group">
+
+            <div class="date-label-row">
+              <label class="block mb-2 text-sm font-medium text-gray-900">
+                تاریخ ارسال
+              </label>
+
+              <div class="date-type-switch">
+                <button type="button" class="date-type-btn active" data-type="jalali">
+                  شمسی
+                </button>
+
+                <button type="button" class="date-type-btn" data-type="gregorian">
+                  میلادی
+                </button>
+              </div>
+            </div>
+
+            <!-- تاریخ شمسی -->
+            <div id="jalaliDateField">
+              <input id="jalaliDate" type="text" class="form-input" placeholder="انتخاب تاریخ" readonly>
+            </div>
+
+          </div>
+
+          <!-- تاریخ میلادی -->
+          <div id="gregorianDateField" class="hidden">
+            <input id="scheduleDate" type="date" class="form-input">
+          </div>
+
+        </div>
+
+
+        <!-- دکمه ارسال -->
+        <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700
+         focus:ring-4 focus:outline-none focus:ring-blue-300
+         font-medium rounded-lg text-sm px-5 py-2.5
+         text-center">
+          ارسال
+        </button>
+
+      </form>
+
+    </section>
+
+
+
+  </main>
+
+  <!-- Modal تأیید ارسال -->
+  <div id="confirmModal" tabindex="-1" aria-hidden="true"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+
+    <div class="relative w-full max-w-md">
+      <div class="relative bg-white rounded-lg shadow">
+
+        <div class="p-6 text-center">
+
+          <h3 class="mb-5 text-lg font-normal text-gray-500">
+            آیا از ارسال پیامک مطمئن هستید؟
+          </h3>
+
+          <button id="confirmSend" type="button" class="text-white bg-blue-600 hover:bg-blue-700
+          focus:ring-4 focus:outline-none focus:ring-blue-300
+          font-medium rounded-lg text-sm px-5 py-2.5">
+            بله، ارسال شود
+          </button>
+
+          <button id="cancelSend" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium
+          text-gray-900 bg-white rounded-lg border border-gray-200
+          hover:bg-gray-100">
+            انصراف
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Flowbite -->
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+  <!-- Tagify -->
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+  <!-- Persian Date Picker -->
+  <script src="https://cdn.jsdelivr.net/gh/saeedvir/azar-datepicker@latest/datepicker.min.js"></script>
+
+  <!-- JavaScript پروژه -->
+  <script src="script.js"></script>
+
+</body>
+
+</html>
