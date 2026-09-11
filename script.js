@@ -13,9 +13,9 @@ const scheduleTime = document.getElementById("scheduleTime");
 const recipientError = document.getElementById("recipientError");
 
 
-// =====================================================
+
 // Tagify - شماره گیرنده
-// =====================================================
+
 
 const tagify = new Tagify(recipientsInput, {
   delimiters: ",| ",
@@ -31,18 +31,18 @@ const tagify = new Tagify(recipientsInput, {
 });
 
 
-// =====================================================
+
 // خطای شماره گیرنده
-// =====================================================
+
 
 tagify.on("invalid", function () {
   alert("شماره تماس وارد شده اشتباه است");
 });
 
 
-// =====================================================
+
 // شمارنده کاراکتر پیام
-// =====================================================
+
 
 function updateCharacterCount() {
   const currentLength = messageInput.value.length;
@@ -57,9 +57,9 @@ messageInput.addEventListener("input", updateCharacterCount);
 updateCharacterCount();
 
 
-// =====================================================
+
 // نمایش / مخفی کردن زمان‌بندی
-// =====================================================
+
 
 scheduleToggle.addEventListener("change", () => {
 
@@ -71,10 +71,8 @@ scheduleToggle.addEventListener("change", () => {
 
 });
 
-
-// =====================================================
 // انتخاب نوع تاریخ
-// =====================================================
+
 
 const dateTypeButtons =
   document.querySelectorAll(".date-type-btn");
@@ -113,9 +111,9 @@ dateTypeButtons.forEach((button) => {
 });
 
 
-// =====================================================
+
 // تقویم شمسی - Azar Datepicker
-// =====================================================
+
 
 const jalaliInput =
   document.getElementById("jalaliDate");
@@ -156,9 +154,9 @@ try {
 }
 
 
-// =====================================================
+
 // پاک کردن همه شماره‌ها
-// =====================================================
+
 
 const clearRecipients =
   document.getElementById("clearRecipients");
@@ -172,9 +170,9 @@ clearRecipients.addEventListener("click", () => {
 });
 
 
-// =====================================================
+
 // ارسال فرم
-// =====================================================
+
 
 smsForm.addEventListener("submit", (event) => {
 
@@ -184,9 +182,9 @@ smsForm.addEventListener("submit", (event) => {
     messageInput.value.trim();
 
 
-  // ---------------------------------------------------
+
   // بررسی متن پیام
-  // ---------------------------------------------------
+
 
   if (!message) {
 
@@ -197,9 +195,9 @@ smsForm.addEventListener("submit", (event) => {
   }
 
 
-  // ---------------------------------------------------
+
   // بررسی شماره گیرنده
-  // ---------------------------------------------------
+
 
   const recipients =
     tagify.value;
@@ -214,9 +212,9 @@ smsForm.addEventListener("submit", (event) => {
   }
 
 
-  // ---------------------------------------------------
+
   // بررسی زمان‌بندی
-  // ---------------------------------------------------
+
 
   if (scheduleToggle.checked) {
 
@@ -238,9 +236,9 @@ smsForm.addEventListener("submit", (event) => {
     const now = new Date();
 
 
-    // =================================================
+
     // تاریخ شمسی
-    // =================================================
+
 
     if (activeDateType === "jalali") {
 
@@ -260,9 +258,9 @@ smsForm.addEventListener("submit", (event) => {
     }
 
 
-    // =================================================
+
     // تاریخ میلادی
-    // =================================================
+
 
     else {
 
@@ -302,9 +300,9 @@ smsForm.addEventListener("submit", (event) => {
     }
 
 
-    // =================================================
+
     // بررسی ساعت
-    // =================================================
+
 
     const selectedTime =
       scheduleTime.value;
@@ -331,10 +329,10 @@ smsForm.addEventListener("submit", (event) => {
       Number(minutes);
 
 
-    // =================================================
+
     // اگر تاریخ میلادی امروز باشد،
     // ساعت گذشته مجاز نیست
-    // =================================================
+
 
     if (activeDateType === "gregorian") {
 
@@ -391,9 +389,9 @@ smsForm.addEventListener("submit", (event) => {
   }
 
 
-  // =================================================
+
   // نمایش Modal تأیید ارسال
-  // =================================================
+
 
   const confirmModal =
     document.getElementById("confirmModal");
@@ -408,9 +406,9 @@ smsForm.addEventListener("submit", (event) => {
 });
 
 
-// =====================================================
+
 // Modal تأیید ارسال
-// =====================================================
+
 
 const confirmSend =
   document.getElementById("confirmSend");
@@ -422,9 +420,9 @@ const confirmModal =
   document.getElementById("confirmModal");
 
 
-// -----------------------------------------------------
+
 // انصراف
-// -----------------------------------------------------
+
 
 if (cancelSend) {
 
@@ -437,9 +435,9 @@ if (cancelSend) {
 }
 
 
-// -----------------------------------------------------
+
 // تأیید ارسال
-// -----------------------------------------------------
+
 
 if (confirmSend) {
 
@@ -456,9 +454,8 @@ if (confirmSend) {
 }
 
 
-// =====================================================
 // Toast موفقیت
-// =====================================================
+
 
 function showSuccessToast() {
 
@@ -507,9 +504,9 @@ function showSuccessToast() {
 }
 
 
-// =====================================================
+
 // پاک کردن فرم
-// =====================================================
+
 
 function resetForm() {
 
